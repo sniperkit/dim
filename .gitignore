@@ -1,6 +1,9 @@
 .idea
 *.iml
 dim
+!cmd/dim
+!cmd/dim/
+!cmd/dim/**
 *.index
 dist/
 

@@ -14,20 +14,22 @@
 package server
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
 	"time"
 
-	"context"
-
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/docker/distribution/manifest/schema2"
 	"github.com/docker/distribution/notifications"
 	"github.com/mailgun/manners"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/environment"
+	"github.com/sirupsen/logrus"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/environment"
 )
 
 // Server type handle  indexation of a docker registry and serves the search endpoint

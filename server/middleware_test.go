@@ -19,7 +19,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/nhurel/dim/lib/utils"
+	// internal
+	"github.com/sniperkit/dim/lib/utils"
 )
 
 func TestGrantAccess(t *testing.T) {

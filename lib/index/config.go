@@ -19,8 +19,11 @@ import (
 	"sync"
 	"text/template"
 
-	"github.com/Sirupsen/logrus"
-	"github.com/nhurel/dim/lib"
+	// external
+	"github.com/sirupsen/logrus"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
 )
 
 // Config holds index configuration

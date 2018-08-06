@@ -14,17 +14,19 @@
 package cmd
 
 import (
-	"fmt"
-
-	"context"
-
 	"bufio"
+	"context"
+	"fmt"
 	"os"
 
-	"github.com/docker/docker/reference"
-	"github.com/nhurel/dim/cli"
-	"github.com/nhurel/dim/lib"
+	// external
+	"github.com/docker/distribution/reference"
 	"github.com/spf13/cobra"
+	// "github.com/docker/docker/reference"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/lib"
 )
 
 func newDeleteCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

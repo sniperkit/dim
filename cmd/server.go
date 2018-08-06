@@ -14,28 +14,28 @@
 package cmd
 
 import (
+	"bytes"
+	"context"
 	"fmt"
+	"net/http"
+	"net/url"
 	"os"
 	"os/signal"
 	"path"
 	"time"
 
-	"context"
-
-	"bytes"
-	"net/http"
-
-	"net/url"
-
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/docker/docker/api/types"
-	"github.com/nhurel/dim/cli"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/index"
-	"github.com/nhurel/dim/lib/registry"
-	"github.com/nhurel/dim/server"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/index"
+	"github.com/sniperkit/dim/lib/registry"
+	"github.com/sniperkit/dim/server"
 )
 
 func newServerCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {
@@ -148,7 +148,7 @@ func handleSignal() {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 	go func() {
-		for _ = range c {
+		for range c {
 			if s != nil {
 				logrus.Infoln("ShuttingDown server")
 				s.BlockingClose()

@@ -16,7 +16,6 @@ package utils
 import (
 	"sort"
 	"testing"
-
 	"time"
 )
 

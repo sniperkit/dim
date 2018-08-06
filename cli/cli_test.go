@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"testing"
 
+	// external
 	"github.com/docker/docker/api/types"
 )
 

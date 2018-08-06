@@ -14,12 +14,11 @@
 package utils
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"sort"
 	"strings"
-
-	"crypto/sha256"
-	"encoding/hex"
 	"time"
 )
 

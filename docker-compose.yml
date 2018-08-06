@@ -13,25 +13,28 @@
 
 version: '2'
 services:
+
  docker-registry:
   container_name: registry
   restart: always
   image: registry:2.5.1
   volumes:
-    - ./integration/registry.yml:/etc/docker/registry/config.yml
+  - ./integration/registry.yml:/etc/docker/registry/config.yml
   networks:
-     - registry
+   - registry
+
  dim:
   container_name: dim
   restart: always
   build: .
   ports:
-    - 80:6000
+  - 80:6000
   networks:
-    - registry
+  - registry
   command: server -l info
   volumes:
-    - ./integration/dim-server.yml:/dim.yml
+  - ./integration/dim-server.yml:/dim.yml
+
 networks:
   registry:
     driver: bridge

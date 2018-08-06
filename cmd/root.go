@@ -14,26 +14,28 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
+	"net/url"
 	"os"
 	"strings"
 
-	"net/url"
-
-	"context"
-
-	"github.com/Sirupsen/logrus"
+	// external
+	"github.com/docker/distribution/reference"
 	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/reference"
-	"github.com/nhurel/dim/cli"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/index"
-	"github.com/nhurel/dim/lib/registry"
-	"github.com/nhurel/dim/lib/utils"
-	"github.com/nhurel/dim/server"
-	"github.com/nhurel/dim/wrapper/dockerClient"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	// "github.com/docker/docker/reference"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/index"
+	"github.com/sniperkit/dim/lib/registry"
+	"github.com/sniperkit/dim/lib/utils"
+	"github.com/sniperkit/dim/server"
+	"github.com/sniperkit/dim/wrapper/dockerClient"
 )
 
 // NewRootCommand builds the whole command list
@@ -128,7 +130,8 @@ func parseName(image, registryURL string) (reference.Named, error) {
 	if parsedName, err = reference.ParseNamed(image); err != nil {
 		return nil, fmt.Errorf("Failed to parse the name of the remote repository image %s : %v", image, err)
 	}
-	if parsedName.Hostname() == reference.DefaultHostname && !strings.HasPrefix(image, reference.DefaultHostname) {
+	// parsedName.Hostname()
+	if reference.Domain(parsedName) == "docker.io" && !strings.HasPrefix(image, "docker.io") {
 		fullURL, err := url.Parse(registryURL)
 		if err != nil {
 			return nil, fmt.Errorf("Failed to parse registry URL : %v", err)
@@ -170,9 +173,10 @@ func connectRegistry(c *cli.Cli, image string) (client dim.RegistryClient, parse
 		authConfig = &types.AuthConfig{Username: username, Password: password}
 	}
 
-	logrus.WithField("hostname", parsedName.Hostname()).Debugln("Connecting to registry")
+	// parsedName.Hostname()
+	logrus.WithField("hostname", reference.Domain(parsedName)).Debugln("Connecting to registry")
 
-	if client, err = registry.New(c, authConfig, utils.BuildURL(parsedName.Hostname(), insecure)); err != nil {
+	if client, err = registry.New(c, authConfig, utils.BuildURL(reference.Domain(parsedName), insecure)); err != nil {
 		err = fmt.Errorf("Failed to connect to registry : %v", err)
 		return
 	}

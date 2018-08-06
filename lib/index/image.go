@@ -17,14 +17,18 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/blevesearch/bleve"
-	"github.com/blevesearch/bleve/analysis/analyzers/keyword_analyzer"
-	"github.com/blevesearch/bleve/analysis/analyzers/simple_analyzer"
-	"github.com/blevesearch/bleve/analysis/analyzers/standard_analyzer"
-	"github.com/blevesearch/bleve/analysis/datetime_parsers/datetime_optional"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/utils"
+	"github.com/blevesearch/bleve/analysis/analyzer/keyword"
+	"github.com/blevesearch/bleve/analysis/analyzer/simple"
+	"github.com/blevesearch/bleve/analysis/analyzer/standard"
+	"github.com/blevesearch/bleve/analysis/datetime/optional"
+	"github.com/blevesearch/bleve/mapping"
+	"github.com/sirupsen/logrus"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/utils"
 )
 
 // Parse converts a docker image into an indexable image
@@ -71,34 +75,34 @@ func Parse(name string, img *dim.RegistryImage) *dim.IndexImage {
 }
 
 // ImageMapping is a document mapping that specifies how to index an image
-var ImageMapping *bleve.DocumentMapping
+var ImageMapping *mapping.DocumentMapping //*bleve.DocumentMapping
 
 func init() {
 
 	ImageMapping = bleve.NewDocumentMapping()
 
 	tagMapping := bleve.NewTextFieldMapping()
-	tagMapping.Analyzer = keyword_analyzer.Name
+	tagMapping.Analyzer = keyword.Name
 	tagMapping.IncludeInAll = true
 	tagMapping.Store = true
 	ImageMapping.AddFieldMappingsAt("Tag", tagMapping)
 
 	nameMapping := bleve.NewTextFieldMapping()
-	nameMapping.Analyzer = simple_analyzer.Name
+	nameMapping.Analyzer = simple.Name
 	nameMapping.IncludeInAll = true
 	nameMapping.Store = true
 	ImageMapping.AddFieldMappingsAt("Name", nameMapping)
 	ImageMapping.AddFieldMappingsAt("FullName", nameMapping)
 
 	idMapping := bleve.NewTextFieldMapping()
-	idMapping.Analyzer = keyword_analyzer.Name
+	idMapping.Analyzer = keyword.Name
 	idMapping.Store = true
 	idMapping.IncludeInAll = false
 	idMapping.Index = true
 	ImageMapping.AddFieldMappingsAt("ID", idMapping)
 
 	authorMapping := bleve.NewTextFieldMapping()
-	authorMapping.Analyzer = simple_analyzer.Name
+	authorMapping.Analyzer = simple.Name
 	authorMapping.IncludeInAll = false
 	authorMapping.Store = true
 	ImageMapping.AddFieldMappingsAt("Author", authorMapping)
@@ -111,13 +115,13 @@ func init() {
 	ImageMapping.AddFieldMappingsAt("Env", authorMapping)
 
 	commentMapping := bleve.NewTextFieldMapping()
-	commentMapping.Analyzer = standard_analyzer.Name
+	commentMapping.Analyzer = standard.Name
 	commentMapping.IncludeInAll = true
 	commentMapping.Store = true
 	ImageMapping.AddFieldMappingsAt("Comment", commentMapping)
 
 	dateMapping := bleve.NewDateTimeFieldMapping()
-	dateMapping.DateFormat = datetime_optional.Name
+	dateMapping.DateFormat = optional.Name
 	dateMapping.Store = true
 	dateMapping.IncludeInAll = false
 	ImageMapping.AddFieldMappingsAt("Created", dateMapping)
@@ -128,6 +132,6 @@ func init() {
 	ImageMapping.AddFieldMappingsAt("ExposedPorts", portsMapping)
 	ImageMapping.AddFieldMappingsAt("Size", portsMapping)
 
-	ImageMapping.DefaultAnalyzer = simple_analyzer.Name
+	ImageMapping.DefaultAnalyzer = simple.Name
 
 }

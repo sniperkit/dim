@@ -22,18 +22,22 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
-
 	"time"
 
-	"github.com/Sirupsen/logrus"
+	// external
+	"github.com/docker/distribution/reference"
 	apitypes "github.com/docker/docker/api/types"
-	"github.com/docker/docker/reference"
 	"github.com/docker/engine-api/client"
 	"github.com/docker/engine-api/types"
 	"github.com/docker/engine-api/types/container"
-	"github.com/nhurel/dim/cli"
-	"github.com/nhurel/dim/lib/utils"
+	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
+	// "github.com/containers/image/docker/reference"
+	// "github.com/docker/docker/reference"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/lib/utils"
 )
 
 // Docker interface exposes the method used to interact with the docker daemon
@@ -127,7 +131,8 @@ func (dc *DockerClient) Pull(image string) error {
 		return err
 	}
 
-	if a, err = dc.Authenticate(n.Hostname()); err != nil {
+	if a, err = dc.Authenticate(reference.Domain(n)); err != nil {
+		// if a, err = dc.Authenticate(n.Hostname()); err != nil {
 		if err == ErrDockerHubAuthenticationNotSupported {
 			logrus.WithError(err).Warnln("Pulling image from docker hub as unauthenticated user")
 		} else {
@@ -152,7 +157,7 @@ func (dc *DockerClient) Pull(image string) error {
 // Authenticate prompts the user his credentials until it can connect to the registry
 func (dc *DockerClient) Authenticate(registryURL string) (string, error) {
 
-	if registryURL == reference.DefaultHostname {
+	if registryURL == "docker.io" {
 		return "", ErrDockerHubAuthenticationNotSupported
 	}
 
@@ -209,7 +214,8 @@ func (dc *DockerClient) Push(image string) error {
 		return err
 	}
 
-	if a, err = dc.Authenticate(n.Hostname()); err != nil {
+	if a, err = dc.Authenticate(reference.Domain(n)); err != nil {
+		// if a, err = dc.Authenticate(n.Hostname()); err != nil {
 		return err
 	}
 	var resp io.ReadCloser

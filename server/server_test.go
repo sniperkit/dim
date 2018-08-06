@@ -14,34 +14,32 @@
 package server_test
 
 import (
-	"testing"
-
-	"net/http"
-	"net/http/httptest"
-
-	"io/ioutil"
-
-	"fmt"
-
 	"bytes"
-
 	"context"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
+	"testing"
 	"time"
 
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/blevesearch/bleve"
 	"github.com/docker/distribution"
-	"github.com/docker/distribution/digest"
 	"github.com/docker/distribution/manifest/schema2"
 	"github.com/docker/distribution/notifications"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/environment"
-	"github.com/nhurel/dim/lib/index"
-	"github.com/nhurel/dim/lib/index/indextest"
-	"github.com/nhurel/dim/lib/mock"
-	"github.com/nhurel/dim/lib/utils"
-	"github.com/nhurel/dim/server"
+	"github.com/opencontainers/go-digest"
+	"github.com/sirupsen/logrus"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/environment"
+	"github.com/sniperkit/dim/lib/index"
+	"github.com/sniperkit/dim/lib/index/indextest"
+	"github.com/sniperkit/dim/lib/mock"
+	"github.com/sniperkit/dim/lib/utils"
+	"github.com/sniperkit/dim/server"
 )
 
 var (

@@ -16,8 +16,11 @@ package cmd
 import (
 	"context"
 
-	"github.com/nhurel/dim/cli"
+	// external
 	"github.com/spf13/cobra"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
 )
 
 func newGenBashCompletionCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

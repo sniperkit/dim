@@ -17,7 +17,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/nhurel/dim/lib"
+	// internal
+	"github.com/sniperkit/dim/lib"
 )
 
 func TestParseHooks(t *testing.T) {

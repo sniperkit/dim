@@ -17,11 +17,14 @@ import (
 	"testing"
 	"time"
 
+	// external
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/image"
 	"github.com/docker/go-connections/nat"
-	"github.com/nhurel/dim/lib"
 	. "gopkg.in/check.v1"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
 )
 
 type ImageTestSuite struct {

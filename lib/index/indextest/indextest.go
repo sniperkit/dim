@@ -16,8 +16,9 @@ package indextest
 import (
 	"time"
 
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/blevesearch/bleve"
+	"github.com/sirupsen/logrus"
 )
 
 // ParseTime converts a given string into time

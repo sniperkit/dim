@@ -15,14 +15,16 @@ package registry
 
 import (
 	"encoding/json"
-
 	"sync"
 
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/docker/distribution"
-	"github.com/docker/distribution/digest"
 	"github.com/docker/distribution/manifest/schema2"
-	"github.com/nhurel/dim/lib"
+	"github.com/opencontainers/go-digest"
+	"github.com/sirupsen/logrus"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
 )
 
 // Repository implements Repository interface

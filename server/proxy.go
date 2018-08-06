@@ -5,7 +5,8 @@ import (
 	"net/http/httputil"
 	"net/url"
 
-	"github.com/Sirupsen/logrus"
+	// external
+	"github.com/sirupsen/logrus"
 )
 
 // RegistryProxy controls access to registry endpoints and forwards request when user is granted

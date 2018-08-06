@@ -17,15 +17,18 @@ import (
 	"io"
 	"text/template"
 
+	// external
 	"github.com/docker/distribution"
 	"github.com/docker/distribution/context"
-	"github.com/docker/distribution/digest"
 	ref "github.com/docker/distribution/reference"
 	"github.com/docker/distribution/registry/client"
 	"github.com/docker/docker/reference"
 	"github.com/docker/engine-api/types"
 	"github.com/docker/engine-api/types/container"
-	"github.com/nhurel/dim/lib"
+	"github.com/opencontainers/go-digest"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
 )
 
 // NoOpRegistryClient is a mock implementation of dim.RegistryClient

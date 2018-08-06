@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/docker/docker/api/types"
 	"github.com/howeyc/gopass"
+	"github.com/sirupsen/logrus"
 )
 
 // Cli holds reader and writer to interact wih user

@@ -15,17 +15,17 @@ package dim
 
 import (
 	"io"
+	"net/http"
+	"text/template"
 	"time"
 
-	"text/template"
-
-	"net/http"
-
+	// external
 	"github.com/docker/distribution"
-	"github.com/docker/distribution/digest"
+	"github.com/docker/distribution/reference"
 	"github.com/docker/distribution/registry/client"
 	"github.com/docker/docker/image"
-	"github.com/docker/docker/reference"
+	"github.com/opencontainers/go-digest"
+	// "github.com/docker/docker/reference"
 )
 
 // SearchResult describes a search result returned from a registry

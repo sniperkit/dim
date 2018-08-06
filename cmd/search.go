@@ -14,23 +14,23 @@
 package cmd
 
 import (
+	"context"
 	"errors"
 	"fmt"
-	"strings"
-
 	"strconv"
-
+	"strings"
 	"time"
 
-	"context"
-
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/docker/docker/api/types"
-	"github.com/nhurel/dim/cli"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/registry"
-	"github.com/nhurel/dim/lib/utils"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/registry"
+	"github.com/sniperkit/dim/lib/utils"
 )
 
 func newSearchCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

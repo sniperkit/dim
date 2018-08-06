@@ -6,7 +6,7 @@ DIM is a Docker Image Management utility. It's the perfect companion for your pr
 - Hooks on image push / deletion
 
 This image is meant to ease the deployment of a docker registry behind a dim server.
-Full documentation about dim itself and and the client command line is available on the [github project](https://github.com/nhurel/dim)
+Full documentation about dim itself and and the client command line is available on the [github project](https://github.com/sniperkit/dim)
 
 ## Deploying private registry with dim
 
@@ -59,7 +59,7 @@ notifications:
 
 **Congratulations : You now have a docker registry accessible on port 80 that provides a search endpoint !**
 
-For more info about dim server configuration see [SERVER.md](doc/SERVER.md) in `doc` directory of the [github project](https://github.com/nhurel/dim).
+For more info about dim server configuration see [SERVER.md](doc/SERVER.md) in `doc` directory of the [github project](https://github.com/sniperkit/dim).
 It will give you instructions about configuring hooks and how to manage authorizations
 
 

@@ -1,21 +1,35 @@
 //  Copyright (c) 2014 Couchbase, Inc.
-//  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
-//  except in compliance with the License. You may obtain a copy of the License at
-//    http://www.apache.org/licenses/LICENSE-2.0
-//  Unless required by applicable law or agreed to in writing, software distributed under the
-//  License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
-//  either express or implied. See the License for the specific language governing permissions
-//  and limitations under the License.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// 		http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 package document
 
 import (
 	"fmt"
+	"reflect"
 
 	"github.com/blevesearch/bleve/analysis"
+	"github.com/blevesearch/bleve/size"
 )
 
-const DefaultBooleanIndexingOptions = StoreField | IndexField
+var reflectStaticSizeBooleanField int
+
+func init() {
+	var f BooleanField
+	reflectStaticSizeBooleanField = int(reflect.TypeOf(f).Size())
+}
+
+const DefaultBooleanIndexingOptions = StoreField | IndexField | DocValues
 
 type BooleanField struct {
 	name              string
@@ -23,6 +37,13 @@ type BooleanField struct {
 	options           IndexingOptions
 	value             []byte
 	numPlainTextBytes uint64
+}
+
+func (b *BooleanField) Size() int {
+	return reflectStaticSizeBooleanField + size.SizeOfPtr +
+		len(b.name) +
+		len(b.arrayPositions)*size.SizeOfUint64 +
+		len(b.value)
 }
 
 func (b *BooleanField) Name() string {

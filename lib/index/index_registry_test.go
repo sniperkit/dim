@@ -14,25 +14,26 @@
 package index
 
 import (
-	"testing"
-
 	"fmt"
 	"io"
-
 	"sync"
+	"testing"
 
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/blevesearch/bleve"
-	"github.com/docker/distribution/digest"
 	"github.com/docker/distribution/reference"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/image"
 	dockerReference "github.com/docker/docker/reference"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/index/indextest"
-	"github.com/nhurel/dim/lib/mock"
-	"github.com/nhurel/dim/lib/registry"
+	"github.com/opencontainers/go-digest"
+	"github.com/sirupsen/logrus"
 	. "gopkg.in/check.v1"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/index/indextest"
+	"github.com/sniperkit/dim/lib/mock"
+	"github.com/sniperkit/dim/lib/registry"
 )
 
 type RegistrySuite struct {

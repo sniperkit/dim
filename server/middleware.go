@@ -17,8 +17,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Sirupsen/logrus"
-	"github.com/nhurel/dim/lib/utils"
+	"github.com/sirupsen/logrus"
+
+	"github.com/sniperkit/dim/lib/utils"
 )
 
 // GetAuthorization finds the first Authorization matching the request

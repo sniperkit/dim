@@ -14,15 +14,17 @@
 package index
 
 import (
+	"fmt"
 	"testing"
 
-	"fmt"
-
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/blevesearch/bleve"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/index/indextest"
+	"github.com/sirupsen/logrus"
 	. "gopkg.in/check.v1"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/index/indextest"
 )
 
 type TestSuite struct {

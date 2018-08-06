@@ -1,0 +1,58 @@
+package: github.com/sniperkit/dim
+ignore:
+- github.com/prometheus/client_model
+import:
+- package: github.com/blevesearch/bleve
+  subpackages:
+  - analysis/analyzer/keyword
+  - analysis/analyzer/simple
+  - analysis/analyzer/standard
+  - analysis/datetime/optional
+  - index
+  - registry
+  - size
+  - geo
+  - document
+  - mapping
+  - numeric
+  - search
+  - search/query
+- package: github.com/containers/image
+  subpackages:
+  - docker/reference
+- package: github.com/docker/cli
+  subpackages:
+  - templates
+- package: github.com/docker/distribution
+  subpackages:
+  - context
+  - manifest/schema2
+  - notifications
+  - reference
+  - registry/client
+- package: github.com/docker/docker
+  subpackages:
+  - api/types
+  - image
+  - reference
+  - registry
+- package: github.com/docker/engine-api
+  subpackages:
+  - client
+  - types
+  - types/container
+  - types/reference
+- package: github.com/howeyc/gopass
+- package: github.com/mailgun/manners
+- package: github.com/opencontainers/go-digest
+- package: github.com/sirupsen/logrus
+- package: github.com/spf13/cobra
+- package: github.com/spf13/viper
+- package: golang.org/x/net
+  subpackages:
+  - context
+testImport:
+- package: github.com/docker/go-connections
+  subpackages:
+  - nat
+- package: gopkg.in/check.v1

@@ -17,7 +17,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/Sirupsen/logrus"
+	// external
+	"github.com/sirupsen/logrus"
 )
 
 func TestGuessTag(t *testing.T) {

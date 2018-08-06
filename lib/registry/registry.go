@@ -24,16 +24,20 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/docker/distribution"
+	"github.com/docker/distribution/reference"
 	"github.com/docker/distribution/registry/client"
 	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/reference"
 	"github.com/docker/docker/registry"
 	imageParser "github.com/docker/engine-api/types/reference"
-	"github.com/nhurel/dim/cli"
-	"github.com/nhurel/dim/lib"
+	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
+	// "github.com/docker/docker/reference"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/lib"
 )
 
 // Client implements RegistryClient interface
@@ -69,7 +73,8 @@ func tryNew(c *cli.Cli, registryAuth *types.AuthConfig, registryURL string, prom
 		transport = registry.AuthTransport(transport, registryAuth, true)
 	}
 
-	if reg, err = client.NewRegistry(ctx, registryURL, transport); err != nil {
+	if reg, err = client.NewRegistry(registryURL, transport); err != nil {
+		// if reg, err = client.NewRegistry(ctx, registryURL, transport); err != nil {
 		return nil, err
 	}
 
@@ -89,7 +94,9 @@ func tryNew(c *cli.Cli, registryAuth *types.AuthConfig, registryURL string, prom
 		}
 		cli.ReadCredentials(c, registryAuth)
 		transport = registry.AuthTransport(transport, registryAuth, true)
-		if reg, err = client.NewRegistry(ctx, registryURL, transport); err != nil {
+
+		if reg, err = client.NewRegistry(registryURL, transport); err != nil {
+			// if reg, err = client.NewRegistry(ctx, registryURL, transport); err != nil {
 			return nil, err
 		}
 	}
@@ -105,7 +112,9 @@ func (c *Client) NewRepository(parsedName reference.Named) (dim.Repository, erro
 
 	var repo distribution.Repository
 	var err error
-	if repo, err = client.NewRepository(ctx, parsedName, c.registryURL, c.transport); err != nil {
+
+	if repo, err = client.NewRepository(parsedName, c.registryURL, c.transport); err != nil {
+		// if repo, err = client.NewRepository(ctx, parsedName, c.registryURL, c.transport); err != nil {
 		return &Repository{}, err
 	}
 

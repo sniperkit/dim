@@ -14,17 +14,18 @@
 package dim_test
 
 import (
+	"bytes"
 	"fmt"
+	"strings"
 	"testing"
 
-	"bytes"
+	// external
+	"github.com/docker/cli/templates"
 
-	"strings"
-
-	"github.com/docker/docker/utils/templates"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/mock"
-	"github.com/nhurel/dim/lib/utils"
+	// internal
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/mock"
+	"github.com/sniperkit/dim/lib/utils"
 )
 
 func TestAddLabel(t *testing.T) {

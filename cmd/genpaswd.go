@@ -4,9 +4,12 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nhurel/dim/cli"
-	"github.com/nhurel/dim/lib/utils"
+	// external
 	"github.com/spf13/cobra"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/lib/utils"
 )
 
 func newGenPasswdCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

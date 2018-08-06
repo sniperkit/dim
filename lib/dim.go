@@ -18,14 +18,15 @@ import (
 	"io"
 	"strings"
 	"text/template"
-
-	"github.com/Sirupsen/logrus"
-
 	"time"
 
+	// external
 	"github.com/docker/engine-api/types"
-	"github.com/nhurel/dim/lib/utils"
-	"github.com/nhurel/dim/wrapper/dockerClient"
+	"github.com/sirupsen/logrus"
+
+	// internal
+	"github.com/sniperkit/dim/lib/utils"
+	"github.com/sniperkit/dim/wrapper/dockerClient"
 )
 
 // Dim is the client type that handle all client side interaction with docker daemon

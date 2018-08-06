@@ -13,7 +13,9 @@
 
 package environment
 
-import "context"
+import (
+	"context"
+)
 
 type envKey string
 

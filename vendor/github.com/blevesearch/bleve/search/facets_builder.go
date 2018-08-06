@@ -1,66 +1,110 @@
 //  Copyright (c) 2014 Couchbase, Inc.
-//  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
-//  except in compliance with the License. You may obtain a copy of the License at
-//    http://www.apache.org/licenses/LICENSE-2.0
-//  Unless required by applicable law or agreed to in writing, software distributed under the
-//  License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
-//  either express or implied. See the License for the specific language governing permissions
-//  and limitations under the License.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// 		http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 package search
 
 import (
+	"reflect"
 	"sort"
 
 	"github.com/blevesearch/bleve/index"
+	"github.com/blevesearch/bleve/size"
 )
 
+var reflectStaticSizeFacetsBuilder int
+var reflectStaticSizeFacetResult int
+var reflectStaticSizeTermFacet int
+var reflectStaticSizeNumericRangeFacet int
+var reflectStaticSizeDateRangeFacet int
+
+func init() {
+	var fb FacetsBuilder
+	reflectStaticSizeFacetsBuilder = int(reflect.TypeOf(fb).Size())
+	var fr FacetResult
+	reflectStaticSizeFacetResult = int(reflect.TypeOf(fr).Size())
+	var tf TermFacet
+	reflectStaticSizeTermFacet = int(reflect.TypeOf(tf).Size())
+	var nrf NumericRangeFacet
+	reflectStaticSizeNumericRangeFacet = int(reflect.TypeOf(nrf).Size())
+	var drf DateRangeFacet
+	reflectStaticSizeDateRangeFacet = int(reflect.TypeOf(drf).Size())
+}
+
 type FacetBuilder interface {
-	Update(index.FieldTerms)
+	StartDoc()
+	UpdateVisitor(field string, term []byte)
+	EndDoc()
+
 	Result() *FacetResult
 	Field() string
+
+	Size() int
 }
 
 type FacetsBuilder struct {
 	indexReader index.IndexReader
-	facets      map[string]FacetBuilder
+	facetNames  []string
+	facets      []FacetBuilder
+	fields      []string
 }
 
 func NewFacetsBuilder(indexReader index.IndexReader) *FacetsBuilder {
 	return &FacetsBuilder{
 		indexReader: indexReader,
-		facets:      make(map[string]FacetBuilder, 0),
 	}
+}
+
+func (fb *FacetsBuilder) Size() int {
+	sizeInBytes := reflectStaticSizeFacetsBuilder + size.SizeOfPtr
+
+	for k, v := range fb.facets {
+		sizeInBytes += size.SizeOfString + v.Size() + len(fb.facetNames[k])
+	}
+
+	for _, entry := range fb.fields {
+		sizeInBytes += size.SizeOfString + len(entry)
+	}
+
+	return sizeInBytes
 }
 
 func (fb *FacetsBuilder) Add(name string, facetBuilder FacetBuilder) {
-	fb.facets[name] = facetBuilder
+	fb.facetNames = append(fb.facetNames, name)
+	fb.facets = append(fb.facets, facetBuilder)
+	fb.fields = append(fb.fields, facetBuilder.Field())
 }
 
-func (fb *FacetsBuilder) Update(docMatch *DocumentMatch) error {
-	var fields []string
-	for _, facetBuilder := range fb.facets {
-		fields = append(fields, facetBuilder.Field())
-	}
+func (fb *FacetsBuilder) RequiredFields() []string {
+	return fb.fields
+}
 
-	if len(fields) > 0 {
-		// find out which fields haven't been loaded yet
-		fieldsToLoad := docMatch.CachedFieldTerms.FieldsNotYetCached(fields)
-		// look them up
-		fieldTerms, err := fb.indexReader.DocumentFieldTerms(docMatch.IndexInternalID, fieldsToLoad)
-		if err != nil {
-			return err
-		}
-		// cache these as well
-		if docMatch.CachedFieldTerms == nil {
-			docMatch.CachedFieldTerms = make(map[string][]string)
-		}
-		docMatch.CachedFieldTerms.Merge(fieldTerms)
-	}
+func (fb *FacetsBuilder) StartDoc() {
 	for _, facetBuilder := range fb.facets {
-		facetBuilder.Update(docMatch.CachedFieldTerms)
+		facetBuilder.StartDoc()
 	}
-	return nil
+}
+
+func (fb *FacetsBuilder) EndDoc() {
+	for _, facetBuilder := range fb.facets {
+		facetBuilder.EndDoc()
+	}
+}
+
+func (fb *FacetsBuilder) UpdateVisitor(field string, term []byte) {
+	for _, facetBuilder := range fb.facets {
+		facetBuilder.UpdateVisitor(field, term)
+	}
 }
 
 type TermFacet struct {
@@ -98,11 +142,34 @@ type NumericRangeFacet struct {
 	Count int      `json:"count"`
 }
 
+func (nrf *NumericRangeFacet) Same(other *NumericRangeFacet) bool {
+	if nrf.Min == nil && other.Min != nil {
+		return false
+	}
+	if nrf.Min != nil && other.Min == nil {
+		return false
+	}
+	if nrf.Min != nil && other.Min != nil && *nrf.Min != *other.Min {
+		return false
+	}
+	if nrf.Max == nil && other.Max != nil {
+		return false
+	}
+	if nrf.Max != nil && other.Max == nil {
+		return false
+	}
+	if nrf.Max != nil && other.Max != nil && *nrf.Max != *other.Max {
+		return false
+	}
+
+	return true
+}
+
 type NumericRangeFacets []*NumericRangeFacet
 
 func (nrf NumericRangeFacets) Add(numericRangeFacet *NumericRangeFacet) NumericRangeFacets {
 	for _, existingNr := range nrf {
-		if numericRangeFacet.Min == existingNr.Min && numericRangeFacet.Max == existingNr.Max {
+		if numericRangeFacet.Same(existingNr) {
 			existingNr.Count += numericRangeFacet.Count
 			return nrf
 		}
@@ -184,6 +251,14 @@ type FacetResult struct {
 	DateRanges    DateRangeFacets    `json:"date_ranges,omitempty"`
 }
 
+func (fr *FacetResult) Size() int {
+	return reflectStaticSizeFacetResult + size.SizeOfPtr +
+		len(fr.Field) +
+		len(fr.Terms)*(reflectStaticSizeTermFacet+size.SizeOfPtr) +
+		len(fr.NumericRanges)*(reflectStaticSizeNumericRangeFacet+size.SizeOfPtr) +
+		len(fr.DateRanges)*(reflectStaticSizeDateRangeFacet+size.SizeOfPtr)
+}
+
 func (fr *FacetResult) Merge(other *FacetResult) {
 	fr.Total += other.Total
 	fr.Missing += other.Missing
@@ -258,9 +333,9 @@ func (fr FacetResults) Fixup(name string, size int) {
 
 func (fb *FacetsBuilder) Results() FacetResults {
 	fr := make(FacetResults)
-	for facetName, facetBuilder := range fb.facets {
+	for i, facetBuilder := range fb.facets {
 		facetResult := facetBuilder.Result()
-		fr[facetName] = facetResult
+		fr[fb.facetNames[i]] = facetResult
 	}
 	return fr
 }

@@ -17,16 +17,20 @@ import (
 	"fmt"
 	"strings"
 	"sync"
-
 	"time"
 
-	"github.com/Sirupsen/logrus"
+	// external
 	"github.com/blevesearch/bleve"
 	"github.com/blevesearch/bleve/search"
-	"github.com/docker/distribution/digest"
-	"github.com/docker/docker/reference"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/utils"
+	"github.com/blevesearch/bleve/search/query"
+	"github.com/docker/distribution/reference"
+	"github.com/opencontainers/go-digest"
+	"github.com/sirupsen/logrus"
+	// "github.com/docker/docker/reference"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/utils"
 )
 
 // Index manages indexation of docker images
@@ -152,7 +156,10 @@ func (idx *Index) IndexImage(image *dim.IndexImage) {
 func (idx *Index) DeleteImage(id string) {
 	l := logrus.WithField("imageID", id)
 	l.Debugln("Removing image from index")
-	q := bleve.NewTermQuery(id).SetField("ID")
+
+	q := bleve.NewPrefixQuery(id)
+	q.SetField("ID")
+
 	rq := bleve.NewSearchRequest(q)
 	rq.Fields = []string{"FullName"}
 	var sr *bleve.SearchResult
@@ -172,7 +179,7 @@ func (idx *Index) DeleteImage(id string) {
 }
 
 // BuildQuery returns the query object corresponding to given parameters
-func BuildQuery(nameTag, advanced string) bleve.Query {
+func BuildQuery(nameTag, advanced string) query.Query {
 	l := logrus.WithFields(logrus.Fields{"nameTag": nameTag, "advanced": advanced})
 	l.Debugln("Building query clause")
 
@@ -180,7 +187,7 @@ func BuildQuery(nameTag, advanced string) bleve.Query {
 		return bleve.NewMatchAllQuery()
 	}
 
-	bq := make([]bleve.Query, 0, 3)
+	bq := make([]query.Query, 0, 3)
 
 	name := nameTag
 	tag := nameTag
@@ -192,16 +199,30 @@ func BuildQuery(nameTag, advanced string) bleve.Query {
 
 	if nameTag != "" {
 		l.WithFields(logrus.Fields{"name": name, "tag": tag}).Debugln("Adding name and tag clauses")
-		bq = append(bq, bleve.NewFuzzyQuery(name).SetField("Name"), bleve.NewMatchQuery(tag).SetField("Tag"))
+
+		fq := bleve.NewFuzzyQuery(name)
+		fq.SetField("Name")
+
+		mq := bleve.NewMatchQuery(tag)
+		mq.SetField("Tag")
+
+		bq = append(bq, fq, mq)
 	}
+
+	nbq := bleve.NewBooleanQuery() // .AddShould(bq)
 
 	if advanced != "" {
 		l.Debugln("Adding advanced clause")
+		nbq.AddShould(bleve.NewQueryStringQuery(advanced))
 		bq = append(bq, bleve.NewQueryStringQuery(advanced))
 	}
 
 	logrus.WithField("queries", bq).Debugln("Returning query with should clauses")
-	return bleve.NewBooleanQuery(nil, bq, nil)
+
+	// nbq := bleve.NewBooleanQuery().AddShould(bq)
+	// nbq.AddShould(bq)
+
+	return nbq // bleve.NewBooleanQuery(nil, bq, nil)
 
 }
 
@@ -286,7 +307,8 @@ func (idx *Index) searchDetails(doc *search.DocumentMatch, fields []string) (*se
 func (idx *Index) FindImage(id string) (*dim.IndexImage, error) {
 	l := logrus.WithField("id", id)
 	l.Debugln("Entering FindImage")
-	q := bleve.NewTermQuery(id).SetField("ID")
+	q := bleve.NewTermQuery(id)
+	q.SetField("ID")
 	rq := bleve.NewSearchRequest(q)
 	rq.Fields = []string{"ID", "Name", "FullName", "Tag", "Comment", "Created", "Author", "Label", "Labels", "Volumes", "ExposedPorts", "Env", "Envs", "Size"}
 

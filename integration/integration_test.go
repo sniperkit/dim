@@ -18,14 +18,16 @@ import (
 	"os"
 	"os/exec"
 	"regexp"
+	"strings"
 	"testing"
 	"time"
 
-	"strings"
-
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/wrapper/dockerClient"
+	// external
 	. "gopkg.in/check.v1"
+
+	// internal
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/wrapper/dockerClient"
 )
 
 type IntegrationTestSuite struct {

@@ -16,17 +16,20 @@ package main
 import (
 	"os"
 
-	"github.com/nhurel/dim/cmd"
+	// external
 	"golang.org/x/net/context"
-	"github.com/nhurel/dim/lib/environment"
-	"github.com/nhurel/dim/cli"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/cmd"
+	"github.com/sniperkit/dim/lib/environment"
 )
 
 // Version stores current version of dim (see Makefile)
 var Version string
 
 func main() {
-	c := &cli.Cli{In:os.Stdin, Out:os.Stdout, Err:os.Stderr}
+	c := &cli.Cli{In: os.Stdin, Out: os.Stdout, Err: os.Stderr}
 	ctx := environment.Set(context.Background(), environment.VersionKey, Version)
 
 	if len(os.Args) == 2 && (os.Args[1] == "--version") {

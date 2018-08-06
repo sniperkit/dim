@@ -4,12 +4,15 @@ import (
 	"context"
 	"fmt"
 
+	// external
 	"github.com/docker/docker/api/types"
-	"github.com/nhurel/dim/cli"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/environment"
-	"github.com/nhurel/dim/lib/registry"
 	"github.com/spf13/cobra"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/environment"
+	"github.com/sniperkit/dim/lib/registry"
 )
 
 func newVersionCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

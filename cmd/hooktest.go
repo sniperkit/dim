@@ -4,15 +4,18 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-
 	"strings"
 
-	"github.com/docker/docker/reference"
-	"github.com/nhurel/dim/cli"
-	"github.com/nhurel/dim/lib"
-	"github.com/nhurel/dim/lib/index"
-	"github.com/nhurel/dim/lib/registry"
+	// external
+	"github.com/docker/distribution/reference"
 	"github.com/spf13/cobra"
+	// "github.com/docker/docker/reference"
+
+	// internal
+	"github.com/sniperkit/dim/cli"
+	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/lib/index"
+	"github.com/sniperkit/dim/lib/registry"
 )
 
 func newHooktestCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

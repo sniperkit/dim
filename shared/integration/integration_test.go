@@ -26,8 +26,8 @@ import (
 	. "gopkg.in/check.v1"
 
 	// internal
-	"github.com/sniperkit/dim/lib"
-	"github.com/sniperkit/dim/wrapper/dockerClient"
+	dim "github.com/sniperkit/dim/pkg/core"
+	dockerClient "github.com/sniperkit/dim/pkg/wrapper/docker"
 )
 
 type IntegrationTestSuite struct {

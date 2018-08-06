@@ -2,7 +2,22 @@ package: github.com/sniperkit/dim
 ignore:
 - github.com/prometheus/client_model
 import:
+- package: github.com/genuinetools/pkg
+  version: master
+  subpackages:
+  - cli
+- package: github.com/gocolly/colly
+  version: master
+  subpackages:
+  - storage
+  - queue
+  - proxy
+  - extensions
+  - debug
+- package: github.com/agrison/go-tablib
+  version: master
 - package: github.com/blevesearch/bleve
+  version: master
   subpackages:
   - analysis/analyzer/keyword
   - analysis/analyzer/simple

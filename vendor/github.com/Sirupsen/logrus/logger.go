@@ -85,7 +85,6 @@ func (logger *Logger) newEntry() *Entry {
 }
 
 func (logger *Logger) releaseEntry(entry *Entry) {
-	entry.Data = map[string]interface{}{}
 	logger.entryPool.Put(entry)
 }
 

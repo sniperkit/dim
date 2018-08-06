@@ -1,6 +1,16 @@
-hash: c5eb3249156ba8a0116fcb460f50b8dfbad9a8ccfe58513d0a57cc92efd49b04
-updated: 2018-08-06T03:07:50.590358143+02:00
+hash: 170e47e607131a0611399b05122e630059bb1dffece9dcc6f66856243af0c5df
+updated: 2018-08-06T17:32:32.549483331+02:00
 imports:
+- name: github.com/aarzilli/golua
+  version: 459c093c4212ae233459840a6e8d0ae98f78c37f
+  subpackages:
+  - lua
+- name: github.com/agrison/go-tablib
+  version: 4930582c22eec7bfc0e5b47e0246d5048a78fe49
+- name: github.com/agrison/mxj
+  version: 1269f8afb3b42d0e7b9cf60041e8e187727c88d6
+- name: github.com/andybalholm/cascadia
+  version: 901648c87902174f774fac311d7f176f8647bdaa
 - name: github.com/armon/go-proxyproto
   version: 5b7edb60ff5f69b60d1950397f7bde6171f1807d
 - name: github.com/Azure/go-ansiterm
@@ -60,6 +70,8 @@ imports:
 - name: github.com/blevesearch/segment
   version: db70c57796cc8c310613541dfade3dce627d09c7
   repo: https://github.com/blevesearch/segment
+- name: github.com/bndr/gotabulate
+  version: bc555436bfd5d4e93a2dd35b462ce37e067afdda
 - name: github.com/boltdb/bolt
   version: 9da31745363232bc1e27dbab3569e77383a51585
   repo: https://github.com/boltdb/bolt
@@ -86,7 +98,7 @@ imports:
   subpackages:
   - templates
 - name: github.com/docker/distribution
-  version: 0dae0957e5fe3156c265d22bef4cba9efbf388e2
+  version: dc53e37d983dc082828bc31cf8cdafebef3961de
   subpackages:
   - configuration
   - context
@@ -181,10 +193,26 @@ imports:
   version: 47565b4f722fb6ceae66b95f853feed578a4a51c
 - name: github.com/edsrzf/mmap-go
   version: 0bce6a6887123b67a60366d2c9fe2dfb74289d2e
+- name: github.com/fatih/structs
+  version: ebf56d35bba727c68ac77f56f2fcf90b181851aa
 - name: github.com/fsnotify/fsnotify
   version: c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9
+- name: github.com/gedex/inflector
+  version: 16278e9db8130ac7ec405dc174cfb94344f16325
+- name: github.com/genuinetools/pkg
+  version: 4038376dadd53f913de41663feae408ef23c8e8a
+  subpackages:
+  - cli
 - name: github.com/glycerine/go-unsnap-stream
   version: 9f0cb55181dd3a0a4c168d3dbc72d4aca4853126
+- name: github.com/gocolly/colly
+  version: 0f78ed3f6bbc7fe874ed7f237eef07a08ad83467
+  subpackages:
+  - debug
+  - extensions
+  - proxy
+  - queue
+  - storage
 - name: github.com/gogo/protobuf
   version: baf2ea5cdb7ce2d399176f925052690c3dad1f56
   subpackages:
@@ -221,6 +249,8 @@ imports:
   version: c2353362d570a7bfa228149c62842019201cfb71
 - name: github.com/mailgun/manners
   version: df18ed182a6091325f32554ad705e35a7309d2f7
+- name: github.com/mattn/go-runewidth
+  version: ce7b0b5c7b45a81508558cd1dba6bb1e4ddb51bb
 - name: github.com/mattn/go-shellwords
   version: f8471b0a71ded0ab910825ee2cf230f25de000f1
 - name: github.com/matttproud/golang_protobuf_extensions
@@ -259,6 +289,10 @@ imports:
   version: bb6d471dc95d4fe11e432687f8b70ff496cf3136
 - name: github.com/pkg/errors
   version: 816c9085562cd7ee03e7f8188a1cfd942858cded
+- name: github.com/progrium/go-plugins
+  version: 529a176f52394e48e8882dd70a01732f1bb480f3
+- name: github.com/progrium/go-plugins-lua
+  version: 6f750eb1485c59f603d9397c915ecba465488777
 - name: github.com/prometheus/client_golang
   version: bcbbc08eb2ddff3af83bbf11e7ec13b4fd730b6e
   subpackages:
@@ -276,6 +310,8 @@ imports:
   - internal/util
   - nfs
   - xfs
+- name: github.com/PuerkitoBio/goquery
+  version: dc2ec5c7ca4d9aae063b79b9f581dd3ea6afd2b2
 - name: github.com/RoaringBitmap/roaring
   version: 01d244c43a7e8d1191a4f369f5908ea9eb9bc9ac
   repo: https://github.com/RoaringBitmap/roaring
@@ -295,9 +331,13 @@ imports:
   version: 3ebe029320b2676d667ae88da602a5f854788a8a
 - name: github.com/spf13/viper
   version: 907c19d40d9a6c9bb55f040ff4ae45271a4754b9
+- name: github.com/stevedonovan/luar
+  version: 22d247e5366095f491cd83edf779ee99a78f5ead
 - name: github.com/steveyen/gtreap
   version: 0abe01ef9be25c4aedc174758ec2d917314d6d70
   repo: https://github.com/steveyen/gtreap
+- name: github.com/tealeg/xlsx
+  version: f36fa3be8893d528004c0938e06b65c67f69b76f
 - name: github.com/tinylib/msgp
   version: 53e4ad1e134ee9b42a7add28ca77177ab17983b3
   subpackages:
@@ -319,6 +359,8 @@ imports:
   version: f4c29de78a2a91c00474a2e689954305c350adf9
   subpackages:
   - context
+  - html
+  - html/atom
   - internal/socks
   - proxy
 - name: golang.org/x/sys

@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	pm "github.com/sniperkit/dim/pkg/plugin/unmarshal"
+	pm "github.com/sniperkit/dim/pkg/plugin/unmarshall"
 )
 
 func Example() {

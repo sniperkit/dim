@@ -24,7 +24,7 @@
 #   go-tests = true
 #   unused-packages = true
 
-ignored = ["github.com/prometheus/client_model"]
+ignored = ["github.com/prometheus/client_model/go"]
 
 [[constraint]]
   name = "github.com/PuerkitoBio/goquery"

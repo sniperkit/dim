@@ -205,9 +205,11 @@ func exportResults(files []fileInfo, outputFile string, outputFormat string, ver
 	case "xml":
 		outputTab, err = ds.XML()
 	case "mysql":
-		outputTab = ds.MySQL("apk-file")
+		// todo: add search column, add search date
+		outputTab = ds.MySQL(pluginName)
 	case "postgres":
-		outputTab = ds.Postgres("apk-file")
+		// todo: add search column, add search date
+		outputTab = ds.Postgres(pluginName)
 	case "html":
 		outputTab, err = ds.XLSX()
 	case "ascii":

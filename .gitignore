@@ -9,7 +9,11 @@ dist/
 
 _vendor*
 
+vendor
 vendor/
+vendor/*
+vendor/**
+
 .env
 .idea
 /logs
@@ -61,11 +65,8 @@ config.toml
 config.ini
 config.xml
 
-_*
-
 .env
 .secret
-snk.golang.vuejs-multi-backend
 .nuxt
 
 bin
@@ -93,7 +94,7 @@ dist/**
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
 
-# default download directory 
+# default download directory
 _dl/
 
 # cache directory
@@ -107,5 +108,3 @@ tmp/
 
 # config toml
 config.toml
-
-./goes

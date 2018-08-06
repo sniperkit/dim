@@ -14,12 +14,22 @@
 version: '3.6'
 services:
 
-  docker-registry:
+  registry:
     container_name: registry
+    restart: always
+    image: distribution/registry:2.6.0
+    volumes:
+    - ./shared/integration/registry.yml:/etc/docker/registry/config.yml
+    # - ./shared/integration/distribution-registry.yml:/etc/docker/registry/config.yml
+    networks:
+    - registry
+
+  registry-legacy:
+    container_name: registry-legacy
     restart: always
     image: registry:2.5.2
     volumes:
-    - ./shared/integration/registry.yml:/etc/docker/registry/config.yml:cached
+    - ./shared/integration/registry.yml:/etc/docker/registry/config.yml
     networks:
     - registry
 

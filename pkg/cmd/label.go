@@ -21,8 +21,8 @@ import (
 	"github.com/spf13/cobra"
 
 	// internal
-	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/core/utils"
+	"github.com/sniperkit/dim/pkg/cli"
+	"github.com/sniperkit/dim/pkg/core/utils"
 )
 
 func newLabelCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

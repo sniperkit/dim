@@ -30,12 +30,12 @@ import (
 
 	// internal
 	"github.com/sniperkit/dim/pkg/cli"
+	dim "github.com/sniperkit/dim/pkg/core"
 	"github.com/sniperkit/dim/pkg/core/index"
 	"github.com/sniperkit/dim/pkg/core/registry"
 	"github.com/sniperkit/dim/pkg/core/utils"
 	"github.com/sniperkit/dim/pkg/server"
 	dockerClient "github.com/sniperkit/dim/pkg/wrapper/docker"
-	dim "github.com/sniperkit/pkg/dim/core"
 )
 
 // NewRootCommand builds the whole command list

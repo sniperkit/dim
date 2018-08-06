@@ -12,10 +12,10 @@ import (
 	// "github.com/docker/docker/reference"
 
 	// internal
-	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/core/index"
-	"github.com/sniperkit/dim/core/registry"
+	"github.com/sniperkit/dim/pkg/cli"
 	dim "github.com/sniperkit/dim/pkg/core"
+	"github.com/sniperkit/dim/pkg/core/index"
+	"github.com/sniperkit/dim/pkg/core/registry"
 )
 
 func newHooktestCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

@@ -1,0 +1,4 @@
+*
+# !*.so --> todo: remove later
+!*.so
+!.gitignore

@@ -10,6 +10,7 @@ import (
 	"os"
 	"path"
 	"strings"
+	"time"
 
 	// external
 	"github.com/PuerkitoBio/goquery"
@@ -43,23 +44,19 @@ type FileInfo struct {
 
 var (
 	// search args
-	arch string
-	repo string
+	arch, branch, repo string
 
 	// export args
-	prefixPath string
-	basename   string
-	format     string
+	prefixPath, basename, format string
 
 	// dev args
-	debug bool
-	vrsn  bool
-	save  bool
+	debug, verbose, vrsn, save bool
 
 	// argument validation lists
-	validArches = []string{"x86", "x86_64", "armhf"}
-	validRepos  = []string{"main", "community", "testing"}
-	validOutput = []string{"markdown", "csv", "yaml", "json", "xlsx", "xml", "tsv", "mysql", "postgres", "html", "ascii"}
+	validBranches = []string{"edge", "v3.8", "v3.7", "v3.6", "v3.5", "v3.4", "v3.3"}
+	validArches   = []string{"x86", "x86_64", "armhf"}
+	validRepos    = []string{"main", "community", "testing"}
+	validOutput   = []string{"markdown", "csv", "yaml", "json", "xlsx", "xml", "tsv", "mysql", "postgres", "html", "ascii"}
 )
 
 func main() {
@@ -74,12 +71,14 @@ func main() {
 
 	// Setup the global flags.
 	p.FlagSet = flag.NewFlagSet("global", flag.ExitOnError)
-	p.FlagSet.StringVar(&arch, "arch", "", "arch to search for ("+strings.Join(validArches, ", ")+")")
+	p.FlagSet.StringVar(&arch, "arch", "x86_64", "arch to search for ("+strings.Join(validArches, ", ")+")")
+	p.FlagSet.StringVar(&branch, "branch", "v3.8", "repository to search in ("+strings.Join(validBranches, ", ")+")")
 	p.FlagSet.StringVar(&repo, "repo", "", "repository to search in ("+strings.Join(validRepos, ", ")+")")
 	p.FlagSet.StringVar(&format, "format", "", "format results with  ("+strings.Join(validOutput, ", ")+") format.")
 	p.FlagSet.StringVar(&prefixPath, "output", "./output", "output results to prefix_path (default: ./output).")
 	p.FlagSet.StringVar(&basename, "basename", "results", "output results to file with basename: (default: ./basename.[FORMAT]).")
 	p.FlagSet.BoolVar(&debug, "d", false, "enable debug logging")
+	p.FlagSet.BoolVar(&verbose, "v", true, "enable verbose mode")
 
 	// p.FlagSet.BoolVar(&vrsn, "version", false, "print version and exit")
 	// p.FlagSet.BoolVar(&vrsn, "v", false, "print version and exit (shorthand)")
@@ -99,6 +98,10 @@ func main() {
 			return fmt.Errorf("%s is not a valid repo", repo)
 		}
 
+		if branch != "" && !stringInSlice(branch, validBranches) {
+			return fmt.Errorf("%s is not a valid branch", branch)
+		}
+
 		return nil
 	}
 
@@ -114,26 +117,20 @@ func main() {
 			format = "yaml"
 		}
 
-		/*
-		   if output == "" {
-		       output = prefixPath + "/" + basename + "." + format
-		   } else {
-		       output = output + "." + format
-		   }
-		*/
-
 		if _, err := os.Stat(prefixPath); os.IsNotExist(err) {
 			os.Mkdir(prefixPath, 0700)
 		}
 
 		outputPrefixBasePath := prefixPath + "/" + basename
 
+		queryStr := p.FlagSet.Arg(0)
+
 		f, p := getFileAndPath(p.FlagSet.Arg(0))
 
 		query := url.Values{
 			"file":   {f},
 			"path":   {p},
-			"branch": {""},
+			"branch": {branch},
 			"repo":   {repo},
 			"arch":   {arch},
 		}
@@ -150,25 +147,8 @@ func main() {
 			logrus.Fatalf("creating document failed: %v", err)
 		}
 
-		// create the writer
-		// w := tabwriter.NewWriter(os.Stdout, 20, 1, 3, ' ', 0)
-		// io.WriteString(w, "FILE\tPACKAGE\tBRANCH\tREPOSITORY\tARCHITECTURE\n")
-
-		// files := getFilesInfo(doc)
-
-		/*
-		   for _, f := range files {
-		       fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\n",
-		           f.path,
-		           f.pkg,
-		           f.branch,
-		           f.repo,
-		           f.arch)
-		   }
-		*/
-
 		// w.Flush()
-		if err := exportResults(getFilesInfo(doc), outputPrefixBasePath, format, debug); err != nil {
+		if err := exportResults(queryStr, getFilesInfo(doc), outputPrefixBasePath, format, verbose); err != nil {
 			return err
 		}
 
@@ -179,11 +159,11 @@ func main() {
 	p.Run()
 }
 
-func exportResults(files []fileInfo, outputFile string, outputFormat string, verbose bool) error {
+func exportResults(query string, files []fileInfo, outputFile string, outputFormat string, verbose bool) error {
 
-	ds := gotl.NewDataset([]string{"file", "package", "branch", "repository", "architecture"})
+	ds := gotl.NewDataset([]string{"query", "search_at", "file", "package", "branch", "repository", "architecture"})
 	for _, f := range files {
-		ds.AppendValues(f.path, f.pkg, f.branch, f.repo, f.arch)
+		ds.AppendValues(query, time.Now(), f.path, f.pkg, f.branch, f.repo, f.arch)
 	}
 
 	outputFile = outputFile + "." + outputFormat
@@ -211,11 +191,11 @@ func exportResults(files []fileInfo, outputFile string, outputFormat string, ver
 		// todo: add search column, add search date
 		outputTab = ds.Postgres(pluginName)
 	case "html":
-		outputTab, err = ds.XLSX()
+		outputTab = ds.HTML()
 	case "ascii":
 		fallthrough
 	default:
-		outputTab = ds.Tabular("grid" /* tablib.TabularGrid */)
+		outputTab = ds.Tabular("condensed" /* tablib.TabularGrid */)
 	}
 	if err != nil {
 		return err
@@ -226,7 +206,7 @@ func exportResults(files []fileInfo, outputFile string, outputFormat string, ver
 	}
 
 	if verbose {
-		outputTab = ds.Tabular("grid" /* tablib.TabularGrid */)
+		outputTab = ds.Tabular("condensed" /* tablib.TabularGrid */)
 		fmt.Println(outputTab)
 	}
 
@@ -238,6 +218,9 @@ func getFilesInfo(d *goquery.Document) []fileInfo {
 	d.Find(".pure-table tr:not(:first-child)").Each(func(j int, l *goquery.Selection) {
 		f := fileInfo{}
 		rows := l.Find("td")
+
+		// pp.Println(rows)
+
 		rows.Each(func(i int, s *goquery.Selection) {
 			switch i {
 			case 0:

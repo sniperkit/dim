@@ -1,0 +1,61 @@
+CREATE TABLE IF NOT EXISTS apk-file
+(
+	id SERIAL PRIMARY KEY,
+	file TEXT,
+	package TEXT,
+	branch TEXT,
+	repository TEXT,
+	architecture TEXT
+);
+
+INSERT INTO apk-file VALUES(1, '/usr/include/cogl/cogl/cogl-version.h', 'cogl-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(2, '/usr/include/dpkg/deb-version.h', 'dpkg-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(3, '/usr/include/dpkg/version.h', 'dpkg-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(4, '/usr/include/guile/2.0/libguile/version.h', 'guile-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(5, '/usr/include/wx-2.8/wx/version.h', 'wxgtk2.8-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(6, '/usr/include/libotr/version.h', 'libotr3-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(7, '/usr/include/json/version.h', 'jsoncpp-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(8, '/usr/include/sng_tc/sng_tc_version.h', 'sngtc_client-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(9, '/usr/include/unique-3.0/unique/uniqueversion.h', 'libunique3-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(10, '/usr/include/directfb/directfb_version.h', 'directfb-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(11, '/usr/include/ilbc/version.h', 'ilbc-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(12, '/usr/include/CLucene/ext/boost/version.hpp', 'clucene-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(13, '/usr/include/pgm-5.2/pgm/version.h', 'openpgm-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(14, '/usr/include/libotr/version.h', 'libotr-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(15, '/usr/share/doc/libdbi-0.9.0/programmers-guide/package-library-version.html', 'libdbi-doc', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(16, '/usr/include/libmp3splt/version.h', 'libmp3splt-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(17, '/usr/include/jasper/jas_version.h', 'jasper-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(18, '/usr/include/valgrind/vki/vki-xen-version.h', 'valgrind-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(19, '/usr/include/gnome-vfs-2.0/libgnomevfs/gnome-vfs-version.h', 'gnome-vfs-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(20, '/usr/include/libcrystalhd/libcrystalhd_version.h', 'libcrystalhd-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(21, '/usr/include/libetpan/libetpan_version.h', 'libetpan-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(22, '/usr/include/unique-1.0/unique/uniqueversion.h', 'libunique-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(23, '/usr/share/syslinux/com32/include/syslinux/version.h', 'syslinux-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(24, '/usr/include/openobex/version.h', 'openobex-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(25, '/usr/include/isl/version.h', 'isl-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(26, '/usr/include/sodium/version.h', 'libsodium-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(27, '/usr/include/spf2/spf_lib_version.h', 'libspf2-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(28, '/usr/include/quvi-0.9/quvi/qversion.h', 'libquvi-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(29, '/usr/share/doc/db/java/com/sleepycat/persist/evolve/Conversion.html', 'db-doc', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(30, '/usr/share/doc/db/java/com/sleepycat/persist/evolve/class-use/Conversion.html', 'db-doc', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(31, '/usr/share/doc/db/api_reference/TCL/version.html', 'db-doc', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(32, '/usr/share/doc/db/api_reference/CXX/envfullversion.html', 'db-doc', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(33, '/usr/share/doc/db/api_reference/CXX/envversion.html', 'db-doc', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(34, '/usr/share/doc/db/api_reference/C/envfullversion.html', 'db-doc', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(35, '/usr/share/doc/db/api_reference/C/envversion.html', 'db-doc', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(36, '/usr/include/yajl/yajl_version.h', 'yajl-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(37, '/usr/include/vte-0.0/vte/vteversion.h', 'vte-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(38, '/usr/include/gstreamer-0.10/gst/gstversion.h', 'gstreamer0.10-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(39, '/usr/include/bonobo-activation-2.0/bonobo-activation/bonobo-activation-version.h', 'libbonobo-dev', 'edge', 'main', 'x86_64');
+INSERT INTO apk-file VALUES(40, '/usr/include/jasper/jas_version.h', 'jasper-dev', 'edge', 'main', 'x86');
+INSERT INTO apk-file VALUES(41, '/usr/include/spandsp/version.h', 'spandsp-dev', 'edge', 'main', 'x86');
+INSERT INTO apk-file VALUES(42, '/usr/include/cogl/cogl/cogl-version.h', 'cogl-dev', 'edge', 'main', 'x86');
+INSERT INTO apk-file VALUES(43, '/usr/include/bonobo-activation-2.0/bonobo-activation/bonobo-activation-version.h', 'libbonobo-dev', 'edge', 'main', 'x86');
+INSERT INTO apk-file VALUES(44, '/usr/include/guile/2.0/libguile/version.h', 'guile-dev', 'edge', 'main', 'x86');
+INSERT INTO apk-file VALUES(45, '/usr/include/libotr/version.h', 'libotr3-dev', 'edge', 'main', 'x86');
+INSERT INTO apk-file VALUES(46, '/usr/include/json/version.h', 'jsoncpp-dev', 'edge', 'main', 'x86');
+INSERT INTO apk-file VALUES(47, '/usr/include/sng_tc/sng_tc_version.h', 'sngtc_client-dev', 'edge', 'main', 'x86');
+INSERT INTO apk-file VALUES(48, '/usr/include/libcrystalhd/libcrystalhd_version.h', 'libcrystalhd-dev', 'edge', 'main', 'x86');
+INSERT INTO apk-file VALUES(49, '/usr/include/directfb/directfb_version.h', 'directfb-dev', 'edge', 'main', 'x86');
+
+COMMIT;

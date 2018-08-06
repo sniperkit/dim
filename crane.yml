@@ -1,0 +1,42 @@
+services:
+
+  # dim:
+    # rm: true
+    # interactive: true
+    # tty: true
+    # share-ssh-socket: true
+    # volume: ["$GOPATH:/go"]
+
+commands:
+  server: run dim
+
+groups:
+  standalone:
+  - dim
+  advanced:
+  - dim
+  - mysql
+  - postgres
+  - front
+  - elstack
+  - nginx
+  rmdb:
+  - mysql
+  - postgres
+  idx:
+  - elstack
+  - manticore
+
+accelerated-mounts:
+  dim:
+    uid: 1000
+    gid: 1000
+  mysql:
+    uid: 1000
+    gid: 1000
+  postgres:
+    uid: 1000
+    gid: 1000
+  front:
+    uid: 1000
+    gid: 1000

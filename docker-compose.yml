@@ -11,29 +11,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: '2'
+version: '3.6'
 services:
 
- docker-registry:
-  container_name: registry
-  restart: always
-  image: registry:2.5.1
-  volumes:
-  - ./integration/registry.yml:/etc/docker/registry/config.yml
-  networks:
-   - registry
+  docker-registry:
+    container_name: registry
+    restart: always
+    image: registry:2.5.2
+    volumes:
+    - ./shared/integration/registry.yml:/etc/docker/registry/config.yml:cached
+    networks:
+    - registry
 
- dim:
-  container_name: dim
-  restart: always
-  build: .
-  ports:
-  - 80:6000
-  networks:
-  - registry
-  command: server -l info
-  volumes:
-  - ./integration/dim-server.yml:/dim.yml
+  dim-server:
+    image: sniperkit/dim:latest-alpine3.8
+    container_name: dim-server
+    restart: always
+    build:
+      context: .
+    ports:
+    - 80:6000
+    networks:
+    - registry
+    command: server -l info
+    volumes:
+    - ./shared/integration/dim-server.yml:/dim.yml:cached
+
+  # check if we can split webservice and cli
+  dim-cli:
+    image: sniperkit/dim:latest-alpine3.8
+    container_name: dim-server
+    restart: always
+    build:
+      context: .
+    networks:
+    - registry
+    command: -l info
+    volumes:
+    - ./shared/integration/dim.yml:/dim.yml:cached
 
 networks:
   registry:

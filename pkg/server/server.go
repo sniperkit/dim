@@ -28,8 +28,8 @@ import (
 	"github.com/sirupsen/logrus"
 
 	// internal
-	"github.com/sniperkit/dim/lib"
-	"github.com/sniperkit/dim/lib/environment"
+	dim "github.com/sniperkit/dim/pkg/core"
+	"github.com/sniperkit/dim/pkg/core/environment"
 )
 
 // Server type handle  indexation of a docker registry and serves the search endpoint

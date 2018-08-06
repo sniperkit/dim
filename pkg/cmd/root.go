@@ -29,13 +29,13 @@ import (
 	// "github.com/docker/docker/reference"
 
 	// internal
-	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/lib"
-	"github.com/sniperkit/dim/lib/index"
-	"github.com/sniperkit/dim/lib/registry"
-	"github.com/sniperkit/dim/lib/utils"
-	"github.com/sniperkit/dim/server"
-	"github.com/sniperkit/dim/wrapper/dockerClient"
+	"github.com/sniperkit/dim/pkg/cli"
+	"github.com/sniperkit/dim/pkg/core/index"
+	"github.com/sniperkit/dim/pkg/core/registry"
+	"github.com/sniperkit/dim/pkg/core/utils"
+	"github.com/sniperkit/dim/pkg/server"
+	dockerClient "github.com/sniperkit/dim/pkg/wrapper/docker"
+	dim "github.com/sniperkit/pkg/dim/core"
 )
 
 // NewRootCommand builds the whole command list

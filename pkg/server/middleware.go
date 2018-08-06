@@ -17,9 +17,11 @@ import (
 	"fmt"
 	"net/http"
 
+	// external
 	"github.com/sirupsen/logrus"
 
-	"github.com/sniperkit/dim/lib/utils"
+	// internal
+	"github.com/sniperkit/dim/pkg/core/utils"
 )
 
 // GetAuthorization finds the first Authorization matching the request

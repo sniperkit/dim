@@ -27,10 +27,10 @@ import (
 	"github.com/spf13/cobra"
 
 	// internal
-	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/lib"
-	"github.com/sniperkit/dim/lib/registry"
-	"github.com/sniperkit/dim/lib/utils"
+	"github.com/sniperkit/dim/pkg/cli"
+	dim "github.com/sniperkit/dim/pkg/core"
+	"github.com/sniperkit/dim/pkg/core/registry"
+	"github.com/sniperkit/dim/pkg/core/utils"
 )
 
 func newSearchCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

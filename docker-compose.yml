@@ -37,19 +37,6 @@ services:
     volumes:
     - ./shared/integration/dim-server.yml:/dim.yml:cached
 
-  # check if we can split webservice and cli
-  dim-cli:
-    image: sniperkit/dim:latest-alpine3.8
-    container_name: dim-server
-    restart: always
-    build:
-      context: .
-    networks:
-    - registry
-    command: -l info
-    volumes:
-    - ./shared/integration/dim.yml:/dim.yml:cached
-
 networks:
   registry:
     driver: bridge

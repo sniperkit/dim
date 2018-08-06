@@ -33,13 +33,13 @@ import (
 	"github.com/sirupsen/logrus"
 
 	// internal
-	"github.com/sniperkit/dim/lib"
-	"github.com/sniperkit/dim/lib/environment"
-	"github.com/sniperkit/dim/lib/index"
-	"github.com/sniperkit/dim/lib/index/indextest"
-	"github.com/sniperkit/dim/lib/mock"
-	"github.com/sniperkit/dim/lib/utils"
-	"github.com/sniperkit/dim/server"
+	dim "github.com/sniperkit/dim/pkg/core"
+	"github.com/sniperkit/dim/pkg/core/environment"
+	"github.com/sniperkit/dim/pkg/core/index"
+	"github.com/sniperkit/dim/pkg/core/index/indextest"
+	"github.com/sniperkit/dim/pkg/core/mock"
+	"github.com/sniperkit/dim/pkg/core/utils"
+	"github.com/sniperkit/dim/pkg/server"
 )
 
 var (

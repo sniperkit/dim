@@ -13,9 +13,9 @@ import (
 
 	// internal
 	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/lib"
-	"github.com/sniperkit/dim/lib/index"
-	"github.com/sniperkit/dim/lib/registry"
+	"github.com/sniperkit/dim/core/index"
+	"github.com/sniperkit/dim/core/registry"
+	dim "github.com/sniperkit/dim/pkg/core"
 )
 
 func newHooktestCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

@@ -22,7 +22,7 @@ import (
 
 	// internal
 	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/lib/utils"
+	"github.com/sniperkit/dim/core/utils"
 )
 
 func newLabelCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

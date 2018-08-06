@@ -11,25 +11,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cmd
+package indextest
 
 import (
-	"context"
+	"time"
 
 	// external
-	"github.com/spf13/cobra"
-
-	// internal
-	"github.com/sniperkit/dim/pkg/cli"
+	"github.com/blevesearch/bleve"
+	"github.com/sirupsen/logrus"
 )
 
-func newGenBashCompletionCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {
-	genBashCompletionCommand := &cobra.Command{
-		Hidden: true,
-		Use:    "autocomplete",
-		Run: func(cmd *cobra.Command, args []string) {
-			rootCommand.GenBashCompletionFile("dim_compl")
-		},
+// ParseTime converts a given string into time
+func ParseTime(value string) time.Time {
+	t, err := time.Parse(time.RFC3339, value)
+	if err != nil {
+		logrus.WithError(err).WithField("time", value).Error("failed to parse datetime")
 	}
-	rootCommand.AddCommand(genBashCompletionCommand)
+	return t
+}
+
+// MockIndex creates a bleve Index for tests
+func MockIndex(dm *bleve.DocumentMapping) (bleve.Index, error) {
+	mapping := bleve.NewIndexMapping()
+	mapping.AddDocumentMapping("image", dm)
+	mapping.DefaultField = "_all"
+	return bleve.NewMemOnly(mapping)
 }

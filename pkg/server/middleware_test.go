@@ -20,7 +20,7 @@ import (
 	"testing"
 
 	// internal
-	"github.com/sniperkit/dim/lib/utils"
+	"github.com/sniperkit/dim/pkg/core/utils"
 )
 
 func TestGrantAccess(t *testing.T) {

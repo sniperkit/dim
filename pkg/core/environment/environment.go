@@ -11,25 +11,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cmd
+package environment
 
 import (
 	"context"
-
-	// external
-	"github.com/spf13/cobra"
-
-	// internal
-	"github.com/sniperkit/dim/pkg/cli"
 )
 
-func newGenBashCompletionCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {
-	genBashCompletionCommand := &cobra.Command{
-		Hidden: true,
-		Use:    "autocomplete",
-		Run: func(cmd *cobra.Command, args []string) {
-			rootCommand.GenBashCompletionFile("dim_compl")
-		},
-	}
-	rootCommand.AddCommand(genBashCompletionCommand)
+type envKey string
+
+// VersionKey is the context key under which the version of dim is stored
+const VersionKey string = "dimVersion"
+
+// StartTimeKey is the context key under which the server was created
+const StartTimeKey string = "startTime"
+
+// Set returns a new context with the new key/value pair
+func Set(ctx context.Context, key string, value interface{}) context.Context {
+	return context.WithValue(ctx, envKey(key), value)
+}
+
+// Get reads a given key from the context
+func Get(ctx context.Context, key string) interface{} {
+	return ctx.Value(envKey(key))
 }

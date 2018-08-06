@@ -31,7 +31,7 @@ chmod a+x dim
 
 ## Server installation
 
-The easiest way to deploy dim in server mode is to use the docker image as documented in [SERVER.md](doc/SERVER.md) in the `doc` directory.
+The easiest way to deploy dim in server mode is to use the docker image as documented in [SERVER.md](docs/SERVER.md) in the `doc` directory.
 Otherwise, it's obviously possible to install the same binary as for client installation and run it with `dim server` command.
 
 # Configuration (client and server mode)

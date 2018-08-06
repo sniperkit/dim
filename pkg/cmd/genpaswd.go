@@ -8,8 +8,8 @@ import (
 	"github.com/spf13/cobra"
 
 	// internal
-	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/lib/utils"
+	"github.com/sniperkit/dim/pkg/cli"
+	"github.com/sniperkit/dim/pkg/core/utils"
 )
 
 func newGenPasswdCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

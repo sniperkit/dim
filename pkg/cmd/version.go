@@ -9,10 +9,10 @@ import (
 	"github.com/spf13/cobra"
 
 	// internal
-	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/lib"
-	"github.com/sniperkit/dim/lib/environment"
-	"github.com/sniperkit/dim/lib/registry"
+	"github.com/sniperkit/dim/pkg/cli"
+	dim "github.com/sniperkit/dim/pkg/core"
+	"github.com/sniperkit/dim/pkg/core/environment"
+	"github.com/sniperkit/dim/pkg/core/registry"
 )
 
 func newVersionCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

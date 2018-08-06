@@ -1,5 +1,6 @@
 FROM scratch
-COPY ca-certificates.crt /etc/ssl/certs/
+
+COPY shared/certs/dim.crt /etc/ssl/certs/
 EXPOSE 6000
 
 ENV REGISTRY_URL=http://docker-registry:5000

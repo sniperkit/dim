@@ -1,6 +1,6 @@
 services:
 
-  # dim:
+  # dim-server:
     # rm: true
     # interactive: true
     # tty: true
@@ -8,18 +8,20 @@ services:
     # volume: ["$GOPATH:/go"]
 
 commands:
-  server: run dim
+  server: run dim-server
 
 groups:
   standalone:
-  - dim
-  advanced:
-  - dim
+  - dim-server
+  dev:
+  # - dim-beta
+  # - dim-cli
+  # - dim-front
+  # - nginx
+  - dim-server
   - mysql
   - postgres
-  - front
   - elstack
-  - nginx
   rmdb:
   - mysql
   - postgres
@@ -28,15 +30,15 @@ groups:
   - manticore
 
 accelerated-mounts:
-  dim:
+  dim-server:
     uid: 1000
     gid: 1000
-  mysql:
-    uid: 1000
-    gid: 1000
-  postgres:
-    uid: 1000
-    gid: 1000
-  front:
-    uid: 1000
-    gid: 1000
+  # dim-front:
+  #   uid: 1000
+  #   gid: 1000
+  # mysql:
+  #   uid: 1000
+  #   gid: 1000
+  # postgres:
+  #   uid: 1000
+  #   gid: 1000

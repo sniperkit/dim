@@ -25,8 +25,8 @@ import (
 	// "github.com/docker/docker/reference"
 
 	// internal
-	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/lib"
+	"github.com/sniperkit/dim/pkg/cli"
+	dim "github.com/sniperkit/dim/pkg/core"
 )
 
 func newDeleteCommand(c *cli.Cli, rootCommand *cobra.Command, ctx context.Context) {

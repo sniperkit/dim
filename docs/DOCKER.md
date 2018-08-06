@@ -59,7 +59,7 @@ notifications:
 
 **Congratulations : You now have a docker registry accessible on port 80 that provides a search endpoint !**
 
-For more info about dim server configuration see [SERVER.md](doc/SERVER.md) in `doc` directory of the [github project](https://github.com/sniperkit/dim).
+For more info about dim server configuration see [SERVER.md](docs/SERVER.md) in `doc` directory of the [github project](https://github.com/sniperkit/dim).
 It will give you instructions about configuring hooks and how to manage authorizations
 
 

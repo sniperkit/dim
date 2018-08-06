@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dockerClient
+package docker_client
 
 import (
 	"bytes"
@@ -36,8 +36,8 @@ import (
 	// "github.com/docker/docker/reference"
 
 	// internal
-	"github.com/sniperkit/dim/cli"
-	"github.com/sniperkit/dim/lib/utils"
+	"github.com/sniperkit/dim/pkg/cli"
+	"github.com/sniperkit/dim/pkg/core/utils"
 )
 
 // Docker interface exposes the method used to interact with the docker daemon
